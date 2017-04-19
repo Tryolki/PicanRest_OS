@@ -1,18 +1,19 @@
-from pecan import expose, redirect
+from pecan import expose
 from webob.exc import status_map
 from ospecanrest.controllers.api import api
+from ospecanrest.model import star
 
 
 class RootController(object):
-    api = api.ApiController()
+    # Temporary solution. In the future will be add database and sqlalchemy
+    stars = {1: star.Star("Aldebaran", 0),
+             2: star.Star("Sun", 0)}
 
-    @expose(generic=True, template='index.html')
+    api = api.ApiController(stars)
+
+    @expose(generic=True, template='json')
     def index(self):
-        return dict()
-
-    @index.when(method='POST')
-    def index_post(self, q):
-        redirect('https://pecan.readthedocs.io/en/latest/search.html?q=%s' % q)
+        return [dict(id=key, name=value) for key, value in self.stars.items()]
 
     @expose('error.html')
     def error(self, status):
