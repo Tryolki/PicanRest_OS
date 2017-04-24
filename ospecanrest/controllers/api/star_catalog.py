@@ -5,9 +5,9 @@ from ospecanrest.model import star
 
 class StarCatalogController(rest.RestController):
     key_index = 2
-
-    def __init__(self, stars):
-        self.stars = stars
+    # Temporary solution. In the future will be add database and sqlalchemy
+    stars = {1: star.Star("Aldebaran", 0),
+             2: star.Star("Sun", 0)}
 
     @pecan.expose('json', content_type='application/json')
     def get(self):

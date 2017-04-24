@@ -1,7 +1,7 @@
 from ospecanrest.controllers.api import star_catalog
+from pecan import rest
 
 
-class ApiController(object):
+class ApiController(rest.RestController):
 
-    def __init__(self, stars):
-        self.stars = star_catalog.StarCatalogController(stars)
+    stars = star_catalog.StarCatalogController()
